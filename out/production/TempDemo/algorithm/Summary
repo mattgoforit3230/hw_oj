@@ -1,0 +1,96 @@
+疑难杂症：
+    15.三数之和：使用回溯解决不了[0,0,0,0]出现2个[0,0,0]的问题：
+        因为剪枝采用的if(last != nums[start]) dfs(temp,res,start+1,need,nums,last);
+        -1，0，0，1得到的是(-1,0,0)  (-1,0) (-1,0,1)取的第二0
+        但是如果用flag设置，前面有0没有用那后面的0也不许用，那么-1，0，0，1将拿不到最后的1
+
+    82. 删除排序链表中的重复元素 II:不明白链表的递归&迭代操作
+    160. 相交链表:错过的人走对方的路也还是错过，注定在一起的人就算一开始不在一起，最后也会白头
+    725. 分隔链表
+
+    502. IPO：贪心算法➕大根堆(根为最大值)java为PrirityQueue实现堆，同时定义大根（(a,b) -> b-a）;
+            新操作：联系两个数组，然后对其中一个数组排序，让另一个数组也对应变化：
+                int[][] arr = new int[a.length][a.length];
+                arr[i][0] = a[i];
+                arr[i][1] = b[i];
+            排序：Arrays.sort(arr,(a,b)->a[0]-b[0]);表示对a数组的大小为基准
+
+    567. 字符串的排列：滑动窗口
+    //记录的是个狗屁东西啊，这看得懂什么？？？
+            1.（固定窗口大小，i & i-n）对比两个字母字符串是否含有相同字母：new arr1[26];new arr2[26]
+                                         ++arr1[s1.charAt(i)-'a'];
+                                         ++arr2[s2.charAt(i)-'a'];
+                                         然后对比两个数组Arrays.equals(arr1,arr2);
+            2. 优化：用一个int diff表示有几个字母有不同，在检索子串时，只要arr[s1.charAt(i)-'a']不为0，diff++；
+                    然后遍历长串，右指针：x =  s1.charAt(i)-'a';
+                                      arr[x]==0时，diff++；
+                                      arr[x]++;
+                                      arr[x]==0时，diff--；
+                               左指针：y =  s1.charAt(i-n)-'a';
+                                      arr[y]==0时，diff++；
+                                      arr[y]--;
+                                      arr[y]==0时，diff--；
+
+            3.双指针步骤：1、left rigth两个指针，之间算作一个大小可变的窗口
+                     2、移动rigth指针，如果遇到满足条件的就继续，不满足就3
+                     3、移动left指针，如果遇到不满足的就不断移动，直到满足，然后判断此刻窗口长度是否等于子串长度
+                     4、重复2，3步骤
+
+    733.图像渲染(岛屿问题)：
+            1.dfs
+            2.bfs:
+                 Queue<> queue = new LinkedList<>();
+                 queue.offer();
+                 while(!queue.isEmpty()){
+                    for(int i= 0;i < size;i++){
+                        temp = queue.poll();
+
+    547.省份问题:/洛谷p1551.亲戚问题:
+            并查集：
+
+    lambda逆序Arrays.sort(arr,(a,b)->b-a)??哪里有问题   ===> arr = new Integer[];
+        Arrays.sort()方法有问题，在比较器不为空时候，sort()参数有范型要求，所以不能用int[]类型的
+        <T>参数类型，类和范型方法当定义，不能是原始数据类型
+        <?>通配符，不能直接修饰类和范型方法，只能当型参List<?> list
+
+    odd[a] = odd[a-1]+cards[i];与 odd[a++] = odd[a-1]+cards[i];的区别，为什么前者可以实现正常功能，后者不可以
+    a++;
+
+    47.全排列I II 回溯法：1.不需要start，for循环每次从0开始扫描，用一个used数组记录
+                       2.需要剪枝时两种策略： a.数组排序+if(i>0 && nums[i-1]==nums[i] && !used[i-1])continue;
+                                          b.用一个set存储加入的数，在for循环前new重置，只记录一个for循环中的数（树层）
+                                          c.a效率高于b
+
+
+    45.跳跃游戏II（求最小步骤到达最后项）:动态规划：在两个for循环之间，首先对数列的每个项进行确定，
+    155. 最小栈:堆栈堆实现，Java中自带Stack{add() , pop()}
+                        队列：Queue new LinkedList{add()/offer() , remove()/poll() , element()/peek()}
+                        双向队列：Deque new LinkedList{addFirst()/offerFirst,addLast()/offerLast() = Queue.offer()
+                        , removeFirst()/pollFirst() , getFirst()/peekFirst()}
+
+
+
+通过学习暂未做出的题，需要N刷：
+384. 打乱数组 (Fisher-Yates 洗牌算法)
+201. 数字范围按位与（[5,7]->4：101 & 110 & 111 = 100）公共前缀 or Brian Kernighan 算法
+66. 加一:题目虽然一般，但是写法需要简洁
+108. 将有序数组转换为二叉搜索树public TreeNode sortedArrayToBST(int[] nums){} +
+    110. 平衡二叉树:判断是否为平衡树public boolean isBalanced(TreeNode root){}：1、自顶向下；
+                                                                           2、自底向上；两种要肥肠熟练才行
+                111. 二叉树的最小深度:三连题
+14. 最长公共前缀(简单题目，主要是训练算法思维)1、横向扫描，两两对比更新公共前缀
+                                       2、分治
+                                       3、二分
+29. 两数相除
+5. 最长回文子串
+
+
+
+待做：
+9.09 68. 文本左右对齐
+9.14 524. 通过删除字母匹配到字典里最长单词
+678. 有效的括号字符串
+9.16 212. 单词搜索 II
+290. 单词规律
+
+
